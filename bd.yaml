@@ -1,20 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: appservice
+  name: mysql
 spec:
   selector:
     matchLabels:
-      app: appservice
+      app: mysql
   template:
     metadata:
       labels:
-        app: appservice
+        app: mysql
     spec:
       containers:
-        - name: web
-          image: nginx:latest
-        - name: appservice
+        - name: mysql
           image: mysql
           ports:
             - containerPort: 3306
@@ -23,21 +21,14 @@ spec:
               value: "root"
             - name: "MYSQL_DATABASE"
               value: "minsait"
-          volumeMounts:
-            - name: mysql-storage
-              mountPath: /var/lib/mysql
-      volumes:
-        - name: mysql-storage
-          hostPath:
-            path: /mysql
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: appservice
+  name: mysql
 spec:
   selector:
-    app: appservice
+    app: mysql
   ports:
     - port: 3306
   type: ClusterIP

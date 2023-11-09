@@ -1,0 +1,33 @@
+## MSQL in Docker
+
+```shell
+docker container run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD="root" -e MYSQL_DATABASE="minsait" --network suanetwork --name meudb -v /host/path:/var/lib/mysql mysql
+```
+
+## ToDo in Docker
+
+```shell
+docker container run -d -p 3000:3000 -e MYSQL_ROOT_PASSWORD="root" -e MSQL_DATABASE="minsait" -e MYSQL_USER="root" --network suanetwork --name todo matheusmprado/sampletodo:v1 or v2
+```
+
+## Subir aplicação no Kubernetes
+
+### Criação do Cluster
+
+```shell
+k3d cluster create nomedocluster -p "3000:30000@loadbalancer"
+```
+
+### Apply na criação dos pods
+
+Criação do serviço com
+
+```shell
+kubectl apply -f server.yaml
+```
+
+### Verificar banco de dados
+
+```shell
+kubectl port-forward service/postgre 3306:3306
+```
